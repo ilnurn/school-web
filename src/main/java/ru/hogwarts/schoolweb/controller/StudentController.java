@@ -44,8 +44,8 @@ public class StudentController {
         return ResponseEntity.ok().build();
     }
 
-//    @GetMapping("/age")
-//    public ResponseEntity<Collection<Student>> findByAge(@RequestParam int age) {
-//        return ResponseEntity.ok(studentService.findStudentsWithAge(age));
-//    }
+    @GetMapping("/age")
+    public ResponseEntity<Collection<Student>> findByAge(@RequestParam int age) {
+        return ResponseEntity.ok(studentService.findStudentsWithAge(age));
+    }
 }

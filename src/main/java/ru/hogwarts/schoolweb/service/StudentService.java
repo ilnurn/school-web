@@ -21,7 +21,7 @@ public class StudentService {
     }
 
     public Student getStudentById(Long studentId) {
-        return studentRepository.findById(studentId).get();
+        return studentRepository.findById(studentId).orElseThrow();
     }
 
     public Student updateStudent(Student student) {
