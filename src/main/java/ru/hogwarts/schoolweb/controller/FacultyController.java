@@ -34,14 +34,14 @@ public class FacultyController {
 
     @PutMapping
     public ResponseEntity<Faculty> updateFaculty(@RequestBody Faculty faculty) {
-        Faculty updatedFaculty = facultyService.updateFaculty(faculty.getId(), faculty);
+        Faculty updatedFaculty = facultyService.updateFaculty(faculty);
         return ResponseEntity.ok(updatedFaculty);
     }
 
     @DeleteMapping("/{facultyId}")
     public ResponseEntity<Faculty> deleteFaculty(@PathVariable Long facultyId) {
-        Faculty deletedFaculty = facultyService.deleteFaculty(facultyId);
-        return ResponseEntity.ok(deletedFaculty);
+        facultyService.deleteFaculty(facultyId);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/facultiesColor")
