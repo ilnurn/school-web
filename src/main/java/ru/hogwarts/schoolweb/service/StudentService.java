@@ -1,6 +1,7 @@
 package ru.hogwarts.schoolweb.service;
 
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 import ru.hogwarts.schoolweb.model.Student;
 import ru.hogwarts.schoolweb.repository.StudentRepository;
 
@@ -21,7 +22,7 @@ public class StudentService {
     }
 
     public Student getStudentById(Long studentId) {
-        return studentRepository.findById(studentId).orElseThrow();
+        return studentRepository.findById(studentId).orElseThrow(() -> new NotFoundException("Такого студента нет"));
     }
 
     public Student updateStudent(Student student) {

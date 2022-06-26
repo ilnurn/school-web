@@ -1,6 +1,7 @@
 package ru.hogwarts.schoolweb.service;
 
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 import ru.hogwarts.schoolweb.model.Faculty;
 import ru.hogwarts.schoolweb.repository.FacultyRepository;
 
@@ -21,7 +22,7 @@ public class FacultyService {
     }
 
     public Faculty getFacultyById(Long facultyId) {
-        return facultyRepository.findById(facultyId).orElseThrow();
+        return facultyRepository.findById(facultyId).orElseThrow(() -> new NotFoundException("Такого факультета нет"));
     }
 
     public Faculty updateFaculty(Faculty faculty) {
