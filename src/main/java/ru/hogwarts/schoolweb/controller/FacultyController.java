@@ -44,8 +44,15 @@ public class FacultyController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/facultiesColor")
-    public ResponseEntity<Collection<Faculty>> findFacultiesWithColor(@RequestParam String facultiesColor) {
-        return ResponseEntity.ok(facultyService.findFacultiesByColor(facultiesColor));
+    @GetMapping("/find")
+    public ResponseEntity<Collection<Faculty>> findFacultiesByColorOrName(@RequestParam(required = false) String color,
+                                                                          @RequestParam(required = false) String name) {
+        Collection<Faculty> foundFaculties = facultyService.getAllFaculties();
+        if (color != null) {
+            foundFaculties = facultyService.findFacultiesByColor(color);
+        } else if (name != null) {
+            foundFaculties = facultyService.findFacultiesByName(name);
+        }
+        return ResponseEntity.ok(foundFaculties);
     }
 }

@@ -2,6 +2,7 @@ package ru.hogwarts.schoolweb.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.hogwarts.schoolweb.model.Faculty;
 import ru.hogwarts.schoolweb.model.Student;
 import ru.hogwarts.schoolweb.service.StudentService;
 
@@ -45,7 +46,25 @@ public class StudentController {
     }
 
     @GetMapping("/age")
-    public ResponseEntity<Collection<Student>> findByAge(@RequestParam int age) {
-        return ResponseEntity.ok(studentService.findStudentsWithAge(age));
+    public ResponseEntity<Collection<Student>> findByAge(@RequestParam(required = false) String age,
+                                                         @RequestParam(required = false) String min,
+                                                         @RequestParam(required = false) String max) {
+        Collection<Student> foundStudentByAge = studentService.findAllStudents();
+        if (age != null) {
+            foundStudentByAge = studentService.findStudentsWithAge(Integer.valueOf(age));
+        } else if (min != null && max != null) {
+            foundStudentByAge = studentService.findStudentsWithAgeBetween(Integer.valueOf(min), Integer.valueOf(max));
+        }
+        return ResponseEntity.ok(foundStudentByAge);
+    }
+
+    @GetMapping("/faculty")
+    public ResponseEntity<Faculty> findStudentsFaculty(@RequestParam String name) {
+        return ResponseEntity.ok(studentService.findStudentsFacultyByName(name));
+    }
+
+    @GetMapping("/students")
+    public ResponseEntity<Collection<Student>> findStudentsByFacultyId(@RequestParam Long id) {
+        return ResponseEntity.ok(studentService.findStudentsByFacultyId(id));
     }
 }
