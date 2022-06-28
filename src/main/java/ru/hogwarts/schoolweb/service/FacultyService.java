@@ -3,6 +3,7 @@ package ru.hogwarts.schoolweb.service;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 import ru.hogwarts.schoolweb.model.Faculty;
+import ru.hogwarts.schoolweb.model.Student;
 import ru.hogwarts.schoolweb.repository.FacultyRepository;
 
 import java.util.Collection;
@@ -32,11 +33,11 @@ public class FacultyService {
         facultyRepository.deleteById(facultyId);
     }
 
-    public Collection<Faculty> findFacultiesByColor(String color) {
-        return facultyRepository.findByColorIgnoreCase(color);
+    public Collection<Faculty> findFacultiesByParameter(String parameter) {
+        return facultyRepository.findByColorIgnoreCaseOrNameIgnoreCase(parameter, parameter);
     }
 
-    public Collection<Faculty> findFacultiesByName(String name) {
-        return facultyRepository.findByNameContainsIgnoreCase(name);
-    }
+//    public Collection<Student> getStudentsByFacultyId(Long facultyId){
+//        return facultyRepository.getStudents();
+//    }
 }

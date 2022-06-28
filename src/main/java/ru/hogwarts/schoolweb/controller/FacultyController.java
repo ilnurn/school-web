@@ -47,12 +47,6 @@ public class FacultyController {
 
     @GetMapping("/find")
     public ResponseEntity<Collection<Faculty>> findFacultiesByColorOrName(@RequestParam String parameter) {
-        Collection<Faculty> foundFaculties = new HashSet<>();
-        if (!facultyService.findFacultiesByColor(parameter).isEmpty()) {
-            foundFaculties = facultyService.findFacultiesByColor(parameter);
-        } else if (!facultyService.findFacultiesByName(parameter).isEmpty()) {
-            foundFaculties = facultyService.findFacultiesByName(parameter);
-        }
-        return ResponseEntity.ok(foundFaculties);
+        return ResponseEntity.ok(facultyService.findFacultiesByParameter(parameter));
     }
 }

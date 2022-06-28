@@ -51,12 +51,12 @@ public class StudentController {
     }
 
     @GetMapping("/faculty")
-    public ResponseEntity<Faculty> findStudentsFaculty(@RequestParam String name) {
-        return ResponseEntity.ok(studentService.findStudentsFacultyByName(name));
+    public ResponseEntity<Faculty> findStudentsFaculty(@RequestParam Long id) {
+        return ResponseEntity.ok(studentService.findStudentsFacultyById(id));
     }
 
-    @GetMapping("/students")
-    public ResponseEntity<Collection<Student>> findStudentsByFacultyId(@RequestParam Long id) {
-        return ResponseEntity.ok(studentService.findStudentsByFacultyId(id));
-    }
+//    @GetMapping("/students")
+//    public ResponseEntity<Collection<Student>> findStudentsByFacultyId(@RequestParam Long id) {
+//        return ResponseEntity.ok(studentService.findStudentsByFacultyId(id));
+//    }
 }
