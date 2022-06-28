@@ -33,16 +33,8 @@ public class StudentService {
         studentRepository.deleteById(studentId);
     }
 
-    public Collection<Student> findStudentsWithAge(int age) {
-        return studentRepository.findByAge(age);
-    }
-
     public Collection<Student> findStudentsWithAgeBetween(int min, int max) {
         return studentRepository.findByAgeBetween(min, max);
-    }
-
-    public Collection<Student> findAllStudents() {
-        return studentRepository.findAll();
     }
 
     public Faculty findStudentsFacultyByName(String studentsName) {

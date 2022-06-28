@@ -6,6 +6,7 @@ import ru.hogwarts.schoolweb.model.Faculty;
 import ru.hogwarts.schoolweb.service.FacultyService;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 @RestController
 @RequestMapping("/faculty")
@@ -45,13 +46,12 @@ public class FacultyController {
     }
 
     @GetMapping("/find")
-    public ResponseEntity<Collection<Faculty>> findFacultiesByColorOrName(@RequestParam(required = false) String color,
-                                                                          @RequestParam(required = false) String name) {
-        Collection<Faculty> foundFaculties = facultyService.getAllFaculties();
-        if (color != null) {
-            foundFaculties = facultyService.findFacultiesByColor(color);
-        } else if (name != null) {
-            foundFaculties = facultyService.findFacultiesByName(name);
+    public ResponseEntity<Collection<Faculty>> findFacultiesByColorOrName(@RequestParam String parameter) {
+        Collection<Faculty> foundFaculties = new HashSet<>();
+        if (!facultyService.findFacultiesByColor(parameter).isEmpty()) {
+            foundFaculties = facultyService.findFacultiesByColor(parameter);
+        } else if (!facultyService.findFacultiesByName(parameter).isEmpty()) {
+            foundFaculties = facultyService.findFacultiesByName(parameter);
         }
         return ResponseEntity.ok(foundFaculties);
     }

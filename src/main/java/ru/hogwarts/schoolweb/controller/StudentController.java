@@ -46,16 +46,8 @@ public class StudentController {
     }
 
     @GetMapping("/age")
-    public ResponseEntity<Collection<Student>> findByAge(@RequestParam(required = false) String age,
-                                                         @RequestParam(required = false) String min,
-                                                         @RequestParam(required = false) String max) {
-        Collection<Student> foundStudentByAge = studentService.findAllStudents();
-        if (age != null) {
-            foundStudentByAge = studentService.findStudentsWithAge(Integer.valueOf(age));
-        } else if (min != null && max != null) {
-            foundStudentByAge = studentService.findStudentsWithAgeBetween(Integer.valueOf(min), Integer.valueOf(max));
-        }
-        return ResponseEntity.ok(foundStudentByAge);
+    public ResponseEntity<Collection<Student>> findByAge(@RequestParam int min, @RequestParam int max) {
+        return ResponseEntity.ok(studentService.findStudentsWithAgeBetween(min,max));
     }
 
     @GetMapping("/faculty")
