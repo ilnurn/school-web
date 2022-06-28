@@ -1,5 +1,7 @@
 package ru.hogwarts.schoolweb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,6 +19,7 @@ public class Faculty {
     private String color;
 
     @OneToMany(mappedBy = "faculty")
+    @JsonIgnore
     private Collection<Student> students = new ArrayList<>();
 
     public Collection<Student> getStudents() {
