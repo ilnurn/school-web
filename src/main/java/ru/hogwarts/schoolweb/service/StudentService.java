@@ -2,11 +2,11 @@ package ru.hogwarts.schoolweb.service;
 
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
+import ru.hogwarts.schoolweb.model.Faculty;
 import ru.hogwarts.schoolweb.model.Student;
 import ru.hogwarts.schoolweb.repository.StudentRepository;
 
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
@@ -33,10 +33,11 @@ public class StudentService {
         studentRepository.deleteById(studentId);
     }
 
-    public Collection<Student> findStudentsWithAge(int age) {
-        Collection<Student> studentsWithAge = studentRepository.findAll().stream()
-                .filter(student -> student.getAge() == age)
-                .collect(Collectors.toList());
-        return studentsWithAge;
+    public Collection<Student> findStudentsWithAgeBetween(int min, int max) {
+        return studentRepository.findByAgeBetween(min, max);
+    }
+
+    public Faculty findStudentFacultyById(Long studentsId) {
+        return getStudentById(studentsId).getFaculty();
     }
 }
