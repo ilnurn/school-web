@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.schoolweb.model.Faculty;
 import ru.hogwarts.schoolweb.model.Student;
 import ru.hogwarts.schoolweb.service.FacultyService;
-
 import java.util.Collection;
 
 @RestController
