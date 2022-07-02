@@ -64,22 +64,28 @@ public class FacultyControllerTest {
         facultyObject.put("name", name);
         facultyObject.put("color", color);
 
-        Faculty faculty = new Faculty();
-        faculty.setId(id);
-        faculty.setName(name);
-        faculty.setColor(color);
-
         Student student = new Student();
         student.setId(studentId);
         student.setName(studentName);
         student.setAge(age);
 
+        ArrayList<Student> students = new ArrayList<>();
+        students.add(0, student);
+
+        Faculty faculty = new Faculty();
+        faculty.setId(id);
+        faculty.setName(name);
+        faculty.setColor(color);
+        faculty.setStudents(students);
+
         List<Faculty> faculties = new ArrayList<>();
         faculties.add(0, faculty);
 
+
         when(facultyRepository.save(any(Faculty.class))).thenReturn(faculty);
         when(facultyRepository.findById(any(Long.class))).thenReturn(Optional.of(faculty));
-        when(facultyRepository.findByColor(eq(color))).thenReturn(faculties);
+        when(facultyRepository.findByColorIgnoreCaseOrNameIgnoreCase(eq(color),eq(color))).thenReturn(faculties);
+        when(facultyRepository.findFacultyById(any(Long.class))).thenReturn(faculty);
 
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/faculty")
@@ -110,7 +116,8 @@ public class FacultyControllerTest {
                 .andExpect(jsonPath("$.color").value(color));
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/faculty/find/" + color)
+                        .get("/faculty/find")
+                        .param("parameter", color)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(id))
@@ -121,8 +128,8 @@ public class FacultyControllerTest {
                 .delete("/faculty/" + id).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .
-                        get("/faculty/students/" + id).content(facultyObject.toString()).contentType(MediaType.APPLICATION_JSON)
+                        .get("/faculty/students/")
+                        .param("id", String.valueOf(id))
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(studentId))
